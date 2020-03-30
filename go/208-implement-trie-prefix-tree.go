@@ -1,3 +1,5 @@
+// https://leetcode-cn.com/problems/implement-trie-prefix-tree/
+
 type Trie struct {
     isEnd bool
     childNodes map[rune]*Trie

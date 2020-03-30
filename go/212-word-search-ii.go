@@ -1,3 +1,5 @@
+// https://leetcode-cn.com/problems/word-search-ii/
+
 type Trie struct {
     isEnd bool
     childNodes map[rune]*Trie

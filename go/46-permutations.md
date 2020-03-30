@@ -27,7 +27,7 @@
    - 此处注意要复制一下临时解，避免将同一个数组重复的加入结果中。
 - T(n) = n ! + (n - 1)! +… + 1  = n!
 
-```
+```go
 func permute(nums []int) [][]int
    var results [][]int
    var result []int

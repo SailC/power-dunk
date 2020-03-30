@@ -1,3 +1,5 @@
+// https://leetcode-cn.com/problems/permutations/
+
 func permute(nums []int) [][]int {
 	var results [][]int
 	var result []
