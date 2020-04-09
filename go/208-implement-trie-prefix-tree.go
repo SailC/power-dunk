@@ -5,70 +5,49 @@ type Trie struct {
     childNodes map[rune]*Trie
 }
 
-
 /** Initialize your data structure here. */
 func Constructor() Trie {
-    return Trie{}
+    return Trie{
+        isEnd: false,
+        childNodes: make(map[rune]*Trie),
+    }
 }
-
 
 /** Inserts a word into the trie. */
-func (this *Trie) Insert(word string)  {
-    if this == nil {
-        return
-    }
-
+func (root *Trie) Insert(word string)  {
+    cur := root
     for _, c := range word {
-        if this.childNodes == nil {
-            this.childNodes = make(map[rune]*Trie)
-        }
-        childNodes := this.childNodes
+        childNodes := cur.childNodes
         if childNodes[c] == nil {
-            childNodes[c] = &Trie{}
+            childNodes[c] = &Trie{
+                isEnd:false,
+                childNodes: make(map[rune]*Trie),
+            }
         }
-        this = childNodes[c]
+        cur = childNodes[c]
     }
-    this.isEnd = true
-
+    cur.isEnd = true
 }
-
 
 /** Returns if the word is in the trie. */
-func (this *Trie) Search(word string) bool {
-    if this == nil {
-        return false
-    }
-
-    for _, c := range word {
-        if this == nil || this.childNodes == nil {
-            return false
-        }
-        this = this.childNodes[c]
-    }
-    return this != nil && this.isEnd
+func (root *Trie) Search(word string) bool {
+   lastNode := root.getLastNode(word)
+   return lastNode != nil && lastNode.isEnd
 }
-
 
 /** Returns if there is any word in the trie that starts with the given prefix. */
-func (this *Trie) StartsWith(prefix string) bool {
-    if this == nil {
-        return false
-    }
-
-    for _, c := range prefix {
-        if this == nil || this.childNodes == nil {
-            return false
-        }
-        this = this.childNodes[c]
-    }
-    return this != nil
+func (root *Trie) StartsWith(prefix string) bool {
+    lastNode := root.getLastNode(prefix)
+    return lastNode != nil
 }
 
-
-/**
- * Your Trie object will be instantiated and called as such:
- * obj := Constructor();
- * obj.Insert(word);
- * param_2 := obj.Search(word);
- * param_3 := obj.StartsWith(prefix);
- */
+func (root *Trie) getLastNode(prefix string) *Trie {
+	cur := root
+	for _, c := range prefix {
+        if _, ok := cur.childNodes[c]; !ok {
+	        return nil
+        }
+        cur = cur.childNodes[c]
+    }
+    return cur
+}
