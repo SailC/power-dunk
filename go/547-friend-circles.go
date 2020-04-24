@@ -4,9 +4,12 @@ func findCircleNum(M [][]int) int {
 	circleCounted := make([]bool, len(M))
 	var dfsFriend func(int)
 	dfsFriend = func(i int) {
+		if circleCounted[i] {
+			return
+		}
 		circleCounted[i] = true
 		for j := 0; j < len(M[i]); j++ {
-			if j != i && M[i][j] == 1 && !circleCounted[j] {
+			if j != i && M[i][j] == 1 {
 				dfsFriend(j)
 			}
 		}
